@@ -9,6 +9,20 @@ body{
 	font-family: "Courier New";
 }
 
+#sidescroller {
+	box-sizing: content-box;
+	width: 500px;
+	height: 305px;
+	color: white;
+	border: 2px solid blue;
+	overflow-x: hidden;
+	overflow-y: hidden;
+}
+
+#sidescrollergraphics {
+	font-family: "Courier New";
+}
+
 p.console{
 	background-color: black;
 	font-family: "Lucida Sans Typewriter";

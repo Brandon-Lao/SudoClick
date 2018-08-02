@@ -18,3 +18,11 @@
 + Stock market:
   + Use canvas to animate it, randomly goes up or down plus manipulation values?
 
+# SIDE SCROLLER SHOOTER:
+
++ Should automatically move left-to-right (or simulate it), detect collisions, etc.
+
+# CURRENT TALKABLE PROBLEMS:
+
+A. HTML/Javascript accepts everything. .innterHTML? That's fine. Array overflowing? That's fine.
+B. Write out EVERY case. There's a lot to be considered.
