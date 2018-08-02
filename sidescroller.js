@@ -1,11 +1,11 @@
 var xBorder = 51;
-var yBorder = 17;
+var yBorder = 10;
 var gameArea;
 
 function getRandomInt(min, max) {
 	min = Math.ceil(min);
 	max = Math.floor(max);
-	return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+	return Math.floor(Math.random() * (max - min)) + min;
 }
 
 function replaceSpace(gameTile, newSprite) {
@@ -17,7 +17,12 @@ var character = {
 	charX: 0,
 	charY: 0,
 	sprite: "@",
+	health: 0,
 	empty: false
+};
+
+function takeDamage(damage) {
+	character.health = Math.max(character.health - damage, 0);
 };
 
 const emptySpace = {
@@ -27,6 +32,11 @@ const emptySpace = {
 
 const projectile = {
 	sprite: "O",
+	empty: false
+};
+
+const hackShot = {
+	sprite: ">",
 	empty: false
 };
 
@@ -44,14 +54,42 @@ function initializeGameArea() {
 	}
 }
 
-function detectCollisions(incomingY, incomingX) {
+function detectCollisions(incomingY, incomingX, incomingSprite) {
 	if (gameArea[incomingY][incomingX].empty) {
 		return true;
 	} else {
-		switch (gameArea[incomingY][incomingX].sprite) {
-			case "$":
-				console.log("Get money");
-				return true;
+		switch (incomingSprite) {
+			case "@":
+				switch (gameArea[incomingY][incomingX].sprite) {
+					case "O":
+						console.log("Oof ouch owie!");
+						takeDamage(1);
+						return true;
+					case "$":
+						console.log("Got money");
+						cash += 50;
+						document.getElementById("cash").innerHTML = cash;
+						return true;
+					default:
+						return false;
+				}
+			case "O":
+				switch (gameArea[incomingY][incomingX].sprite) {
+					case "@":
+						console.log("Oof ouch owie!");
+						takeDamage(1);
+						return false;
+					default:
+						return false;
+				}
+			case ">":
+				switch (gameArea[incomingY][incomingX].sprite) {
+					case "O":
+						replaceSpace(gameArea[incomingY][incomingX], emptySpace);
+						return false;
+					default:
+						return false;
+				}
 			default:
 				return false;
 		}
@@ -61,7 +99,7 @@ function detectCollisions(incomingY, incomingX) {
 function charDown() {
 	if (
 		character.charY + 1 < yBorder &&
-		detectCollisions(character.charY + 1, character.charX)
+		detectCollisions(character.charY + 1, character.charX, character.sprite)
 	) {
 		replaceSpace(gameArea[character.charY][character.charX], emptySpace);
 		character.charY += 1;
@@ -73,7 +111,7 @@ function charDown() {
 function charUp() {
 	if (
 		character.charY - 1 >= 0 &&
-		detectCollisions(character.charY - 1, character.charX)
+		detectCollisions(character.charY - 1, character.charX, character.sprite)
 	) {
 		replaceSpace(gameArea[character.charY][character.charX], emptySpace);
 		character.charY -= 1;
@@ -85,9 +123,10 @@ function charUp() {
 function initialRender() {
 	initializeGameArea();
 	gameArea[0][0].sprite = character.sprite;
-	gameArea[5][0].sprite = "$";
-	gameArea[5][0].empty = false;
+	character.charX = 0;
+	character.charY = 0;
 	//Redraws the area each time we want to make a move, not the best, should figure out a way to change that.
+	document.getElementById("sidescrollergraphics").innerHTML = "";
 	gameArea.forEach(xCoord => {
 		xCoord.forEach(yCoord => {
 			document.getElementById("sidescrollergraphics").innerHTML +=
@@ -113,8 +152,27 @@ function moveNPCs() {
 		yCoord.forEach((xCoord, xIndex) => {
 			switch (xCoord.sprite) {
 				case "O":
-					replaceSpace(gameArea[yIndex][xIndex - 1], projectile);
-					replaceSpace(gameArea[yIndex][xIndex], emptySpace);
+					if (
+						gameArea[yIndex][xIndex - 1] !== undefined &&
+						detectCollisions(yIndex, xIndex - 1, projectile.sprite)
+					) {
+						replaceSpace(gameArea[yIndex][xIndex - 1], projectile);
+						replaceSpace(gameArea[yIndex][xIndex], emptySpace);
+					} else {
+						replaceSpace(gameArea[yIndex][xIndex], emptySpace);
+					}
+					break;
+				case ">":
+					if (
+						gameArea[yIndex][xIndex + 1] !== undefined &&
+						detectCollisions(yIndex, xIndex + 1, hackShot.sprite)
+					) {
+						console.log("Going forward.")
+						replaceSpace(gameArea[yIndex][xIndex + 1], hackShot);
+						replaceSpace(gameArea[yIndex][xIndex], emptySpace);
+					} else {
+						replaceSpace(gameArea[yIndex][xIndex], emptySpace);
+					}
 					break;
 				default:
 					break;
@@ -125,8 +183,26 @@ function moveNPCs() {
 
 initialRender();
 
-window.setInterval(function() {
-	gameArea[getRandomInt(0, yBorder)][xBorder - 1].sprite = "O";
-	moveNPCs();
-	render();
-}, 1000);
+var runState;
+var runStatus = false;
+
+function jackIn() {
+	if (!runStatus) {
+		runStatus = true;
+		character.health += 3;
+		runState = window.setInterval(function() {
+			if (character.health === 0) {jackOut()}
+				else {
+			gameArea[getRandomInt(0, yBorder)][xBorder - 1].sprite = "O";
+			gameArea[getRandomInt(0, yBorder)][1].sprite = ">";
+			moveNPCs();
+			render();}
+		}, 1000);
+	}
+}
+
+function jackOut() {
+	clearInterval(runState);
+	runStatus = false;
+	initialRender();
+}

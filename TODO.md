@@ -1,6 +1,5 @@
 # THINGS TO DO:
 
-+ Get save working! Either get a server or see about that github integration of it.
 + Implement upgrades on the currently existing buildings.
 + Add in a different resource independent of the current loop.
 + Allow log to have at least five lines of logging, updating whenever we get stuff.
@@ -18,9 +17,10 @@
 + Stock market:
   + Use canvas to animate it, randomly goes up or down plus manipulation values?
 
-# SIDE SCROLLER SHOOTER:
-
-+ Should automatically move left-to-right (or simulate it), detect collisions, etc.
++ Side Scroller:
+  + Should automatically move left-to-right (or simulate it), detect collisions, etc.
+  + Currently only can move/down, automatically simulates left-right movement. Colissions are an arse, x and y in the playarea are mixed up.
+  + Needs integration with the main resources and the like: getting cash should change the cash var, etc.
 
 # CURRENT TALKABLE PROBLEMS:
 

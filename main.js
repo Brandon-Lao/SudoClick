@@ -20,16 +20,15 @@ function compileCode() {
 }
 
 function buyProgrammer() {
-    const programmerCost = Math.floor(10 * Math.pow(1.1, programmers)); //works out the cost of this cursor
+    const programmerCost = Math.floor(10 * Math.pow(1.1, programmers));
     if (cash >= programmerCost) {
-        //checks that the player can afford the cursor
-        programmers = programmers + 1; //increases number of cursors
-        cash = cash - programmerCost; //removes the cookies spent
-        document.getElementById("programmers").innerHTML = programmers; //updates the number of cursors for the user
-        document.getElementById("cash").innerHTML = cash; //updates the number of cookies for the user
+        programmers = programmers + 1;
+        cash = cash - programmerCost;
+        document.getElementById("programmers").innerHTML = programmers;
+        document.getElementById("cash").innerHTML = cash;
     }
-    var nextCost = Math.floor(10 * Math.pow(1.1, programmers)); //works out the cost of the next cursor
-    document.getElementById("programmerCost").innerHTML = nextCost; //updates the cursor cost for the user
+    var nextCost = Math.floor(10 * Math.pow(1.1, programmers));
+    document.getElementById("programmercost").innerHTML = nextCost;
 }
 
 function hideUpgrades() {
