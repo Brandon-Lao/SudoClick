@@ -2,6 +2,7 @@
 //If raise, calculate by how much and do so.
 //If overflow to the right, re-draw, with new base's y being the old y, and x=0 at a new date
 //If overflow to the up, then set new ceiling, and redraw?
+
 //We could just use chart.js...
 //But no.
 var canvas = document.getElementById("canvas");
@@ -88,7 +89,7 @@ function stockMarketTick() {
 	oldCash = cash;
 }
 
-//Share price is some function of non-liquid and liquid assets, profit earned
+//Share price is some function of non-liquid and liquid assets, profit earned. Currently it's just old cash in relation to new cash.
 //Should make an IPO upgrade to initialize the stock market component, which determines
 //Base share price and such.
 

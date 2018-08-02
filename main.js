@@ -30,13 +30,22 @@ function buyProgrammer() {
     document.getElementById("programmercost").innerHTML = nextCost;
 }
 
+function sellProgram() {
+    if (programs > 0) {
+        programs -= 1;
+        cash += 10+Math.floor(getRandomInt(0,42));
+        document.getElementById("programs").innerHTML = programs;
+        document.getElementById("cash").innerHTML = cash;
+    }
+}
+
 function hideUpgrades() {
-    if (code < 20 && document.getElementById("compilecode").hidden) {
+    if (code < 20 && document.getElementById("compilecode").hidden) { //Should change this so instead of it being hidden, it inserts it instead.
         document.getElementById("compilecode").hidden = true;
     } else {
         document.getElementById("compilecode").hidden = false;
         document.getElementById("readout1").innerHTML =
-            "Got enough code. Can compile it, now.";
+            "Got enough code. Can compile it, now. And sell it.";
     }
 }
 
