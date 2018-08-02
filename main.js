@@ -4,7 +4,7 @@ var cash = 0;
 
 function codeClick(number) {
     code = code + number;
-    document.getElementById("code").innerHTML = code;
+    document.getElementById("code").innerHTML = Math.floor(code);
 }
 
 var programmers = 0;
@@ -41,18 +41,33 @@ function hideUpgrades() {
             "Got enough code. Can compile it, now.";
     }
 }
+
+function stockMarket() {
+    var canvas = document.getElementById("canvas");
+    var ctx = canvas.getContext("2d");
+    ctx.fillStyle = "pink";
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.lineTo(0, 300);
+    ctx.lineTo(600, 300);
+    ctx.lineTo(600, 0);
+    ctx.lineTo(0, 0);
+    ctx.stroke();
+}
+
 hideUpgrades();
 
 window.setInterval(function() {
+    stockMarket();
     hideUpgrades();
-    codeClick(programmers);
+    codeClick(programmers/1000);
 }, 1);
 
 var save = {
     code: code,
     programs: programs,
     cash: cash,
-    programmers: programmers,
+    programmers: programmers
 };
 
 function saveGame() {
@@ -64,5 +79,6 @@ function loadGame() {
     if (typeof savegame.code !== "undefined") code = savegame.code;
     if (typeof savegame.programs !== "undefined") programs = savegame.programs;
     if (typeof savegame.cash !== "undefined") cash = savegame.cash;
-    if (typeof savegame.programmers !== "undefined") programmers = savegame.programmers;
+    if (typeof savegame.programmers !== "undefined")
+        programmers = savegame.programmers;
 }
