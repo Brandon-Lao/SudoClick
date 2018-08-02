@@ -2,6 +2,12 @@ var xBorder = 51;
 var yBorder = 17;
 var gameArea;
 
+function getRandomInt(min, max) {
+	min = Math.ceil(min);
+	max = Math.floor(max);
+	return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+}
+
 function replaceSpace(gameTile, newSprite) {
 	gameTile.sprite = newSprite.sprite;
 	gameTile.empty = newSprite.empty;
@@ -14,9 +20,14 @@ var character = {
 	empty: false
 };
 
-var emptySpace = {
+const emptySpace = {
 	sprite: ".",
 	empty: true
+};
+
+const projectile = {
+	sprite: "O",
+	empty: false
 };
 
 function initializeGameArea() {
@@ -97,4 +108,25 @@ function render() {
 	});
 }
 
+function moveNPCs() {
+	gameArea.forEach((yCoord, yIndex) => {
+		yCoord.forEach((xCoord, xIndex) => {
+			switch (xCoord.sprite) {
+				case "O":
+					replaceSpace(gameArea[yIndex][xIndex - 1], projectile);
+					replaceSpace(gameArea[yIndex][xIndex], emptySpace);
+					break;
+				default:
+					break;
+			}
+		});
+	});
+}
+
 initialRender();
+
+window.setInterval(function() {
+	gameArea[getRandomInt(0, yBorder)][xBorder - 1].sprite = "O";
+	moveNPCs();
+	render();
+}, 1000);

@@ -60,17 +60,16 @@ hideUpgrades();
 window.setInterval(function() {
     stockMarket();
     hideUpgrades();
-    codeClick(programmers/1000);
+    codeClick(programmers / 1000);
 }, 1);
 
-var save = {
+function saveGame() {
+    var save = {
     code: code,
     programs: programs,
     cash: cash,
     programmers: programmers
 };
-
-function saveGame() {
     localStorage.setItem("save", JSON.stringify(save));
 }
 
@@ -79,6 +78,5 @@ function loadGame() {
     if (typeof savegame.code !== "undefined") code = savegame.code;
     if (typeof savegame.programs !== "undefined") programs = savegame.programs;
     if (typeof savegame.cash !== "undefined") cash = savegame.cash;
-    if (typeof savegame.programmers !== "undefined")
-        programmers = savegame.programmers;
+    if (typeof savegame.programmers !== "undefined") programmers = savegame.programmers;
 }
