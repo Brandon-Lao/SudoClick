@@ -21,10 +21,6 @@ var character = {
 	empty: false
 };
 
-function takeDamage(damage) {
-	character.health = Math.max(character.health - damage, 0);
-};
-
 const emptySpace = {
 	sprite: ".",
 	empty: true
@@ -42,7 +38,15 @@ const hackShot1 = {
 
 const hackShot2 = {
 	sprite: ")",
-	empty: false,
+	empty: false
+};
+
+function takeDamage(damage) {
+	character.health = Math.max(character.health - damage, 0);
+}
+
+function fireShot() {
+	replaceSpace(gameArea[character.charY][character.charX + 1], hackShot1);
 }
 
 function initializeGameArea() {
@@ -85,8 +89,14 @@ function detectCollisions(incomingY, incomingX, incomingSprite) {
 						takeDamage(1);
 						return false;
 					case ">":
-						replaceSpace(gameArea[incomingY][incomingX], emptySpace);
-						replaceSpace(gameArea[incomingY][incomingX-1], emptySpace);
+						replaceSpace(
+							gameArea[incomingY][incomingX],
+							emptySpace
+						);
+						replaceSpace(
+							gameArea[incomingY][incomingX - 1],
+							emptySpace
+						);
 						return false;
 					default:
 						return false;
@@ -94,8 +104,14 @@ function detectCollisions(incomingY, incomingX, incomingSprite) {
 			case ">":
 				switch (gameArea[incomingY][incomingX].sprite) {
 					case "O":
-						replaceSpace(gameArea[incomingY][incomingX], emptySpace);
-						replaceSpace(gameArea[incomingY][incomingX-1], emptySpace);
+						replaceSpace(
+							gameArea[incomingY][incomingX],
+							emptySpace
+						);
+						replaceSpace(
+							gameArea[incomingY][incomingX - 1],
+							emptySpace
+						);
 						return false;
 					default:
 						return false;
@@ -183,14 +199,16 @@ function moveNPCs() {
 						replaceSpace(gameArea[yIndex][xIndex], emptySpace);
 					}
 					break;
-					/*This is a bit of a hacky (har har) solution: When we parse through the area, it's top to bottom, left to right.
+				/*This is a bit of a hacky (har har) solution: When we parse through the area, it's top to bottom, left to right.
 					Problem with that is that our shot moves forward, and we immediately re-parse that shot. Thus, we use hackShot2, which
 					is only parsed after hackShot1 as an 'inbetween' shot. hackShot2 itself does nothing except check if we're at the end,
 					else, it just turns back into hackShot1. */
 				case ")":
-					if (gameArea[yIndex][xIndex + 1] !== undefined)
-					{replaceSpace(gameArea[yIndex][xIndex], hackShot1);}
-					else {replaceSpace(gameArea[yIndex][xIndex], emptySpace);}
+					if (gameArea[yIndex][xIndex + 1] !== undefined) {
+						replaceSpace(gameArea[yIndex][xIndex], hackShot1);
+					} else {
+						replaceSpace(gameArea[yIndex][xIndex], emptySpace);
+					}
 					break;
 				default:
 					break;
@@ -209,12 +227,9 @@ function jackIn() {
 		runStatus = true;
 		character.health += 3;
 		runState = window.setInterval(function() {
-			if (character.health === 0) {jackOut()}
-				else {
-			gameArea[getRandomInt(0, yBorder)][xBorder - 1].sprite = "O";
-			gameArea[getRandomInt(0, yBorder)][1].sprite = ">";
-			moveNPCs();
-			render();}
+				gameArea[getRandomInt(0, yBorder)][xBorder - 1].sprite = "O";
+				moveNPCs();
+				render();
 		}, 100);
 	}
 }

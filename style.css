@@ -9,6 +9,15 @@ body{
 	font-family: "Courier New";
 }
 
+#centerscreen {
+	margin: auto;
+	width: 50%;
+}
+
+#canvas{
+	background-color: black;
+}
+
 #sidescroller {
 	box-sizing: content-box;
 	width: 500px;

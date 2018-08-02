@@ -7,6 +7,8 @@
 
 + Set things into different script files
 
++ 
+
 # THINGS TO NOTE/LEARN:
 
 + Using canvas in order to create animations

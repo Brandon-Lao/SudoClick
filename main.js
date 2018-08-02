@@ -41,24 +41,11 @@ function hideUpgrades() {
     }
 }
 
-function stockMarket() {
-    var canvas = document.getElementById("canvas");
-    var ctx = canvas.getContext("2d");
-    ctx.fillStyle = "pink";
-    ctx.beginPath();
-    ctx.moveTo(0, 0);
-    ctx.lineTo(0, 300);
-    ctx.lineTo(600, 300);
-    ctx.lineTo(600, 0);
-    ctx.lineTo(0, 0);
-    ctx.stroke();
-}
-
 hideUpgrades();
 
 window.setInterval(function() {
-    stockMarket();
     hideUpgrades();
+    if (character.health === 0) jackOut(); //More immediate than the 100ms delay in sidescroller.
     codeClick(programmers / 1000);
 }, 1);
 
