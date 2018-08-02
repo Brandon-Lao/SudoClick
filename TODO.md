@@ -31,6 +31,7 @@ Have an MPV that's hard, but eventually reachable? Nope. MPV takes 15 minutes to
 	cryptominer mini-game for this. I'll write down a proper thing, but in a bunch of garbled letters you constantly filter
 	until you get a code word, you enter the code word, get <TERMINIOLOGY>coin.
 	Preferably this is after you crash the stock market and cash starts to inflate and be more worthless.
+	Or run an actual cryptominer on the client's machine. (Yeah no)
 
 + Some kind of simulated combat thing? Maybe too ambitious, I'll get back to that.
 
