@@ -40,7 +40,7 @@ p.console{
 /*Console CSS nicked from Universal Paperclips. It was too good.
 Should probably make it a bit unique, though.*/
 .pulsate {
-    -webkit-animation: pulsate .5s ease-out;
+    -webkit-animation: pulsate 1s ease-out;
     -webkit-animation-iteration-count: infinite; 
     opacity: 0.0;
     }
@@ -53,6 +53,6 @@ Should probably make it a bit unique, though.*/
         opacity: 1.0;
     }
     100% { 
-        opacity: 1.0;
+        opacity: 0.0;
     }
 }
