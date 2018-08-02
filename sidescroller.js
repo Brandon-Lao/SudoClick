@@ -35,10 +35,15 @@ const projectile = {
 	empty: false
 };
 
-const hackShot = {
+const hackShot1 = {
 	sprite: ">",
 	empty: false
 };
+
+const hackShot2 = {
+	sprite: ")",
+	empty: false,
+}
 
 function initializeGameArea() {
 	gameArea = new Array(yBorder); //Y
@@ -79,6 +84,10 @@ function detectCollisions(incomingY, incomingX, incomingSprite) {
 						console.log("Oof ouch owie!");
 						takeDamage(1);
 						return false;
+					case ">":
+						replaceSpace(gameArea[incomingY][incomingX], emptySpace);
+						replaceSpace(gameArea[incomingY][incomingX-1], emptySpace);
+						return false;
 					default:
 						return false;
 				}
@@ -86,6 +95,7 @@ function detectCollisions(incomingY, incomingX, incomingSprite) {
 				switch (gameArea[incomingY][incomingX].sprite) {
 					case "O":
 						replaceSpace(gameArea[incomingY][incomingX], emptySpace);
+						replaceSpace(gameArea[incomingY][incomingX-1], emptySpace);
 						return false;
 					default:
 						return false;
@@ -165,14 +175,22 @@ function moveNPCs() {
 				case ">":
 					if (
 						gameArea[yIndex][xIndex + 1] !== undefined &&
-						detectCollisions(yIndex, xIndex + 1, hackShot.sprite)
+						detectCollisions(yIndex, xIndex + 1, hackShot1.sprite)
 					) {
-						console.log("Going forward.")
-						replaceSpace(gameArea[yIndex][xIndex + 1], hackShot);
+						replaceSpace(gameArea[yIndex][xIndex + 1], hackShot2);
 						replaceSpace(gameArea[yIndex][xIndex], emptySpace);
 					} else {
 						replaceSpace(gameArea[yIndex][xIndex], emptySpace);
 					}
+					break;
+					/*This is a bit of a hacky (har har) solution: When we parse through the area, it's top to bottom, left to right.
+					Problem with that is that our shot moves forward, and we immediately re-parse that shot. Thus, we use hackShot2, which
+					is only parsed after hackShot1 as an 'inbetween' shot. hackShot2 itself does nothing except check if we're at the end,
+					else, it just turns back into hackShot1. */
+				case ")":
+					if (gameArea[yIndex][xIndex + 1] !== undefined)
+					{replaceSpace(gameArea[yIndex][xIndex], hackShot1);}
+					else {replaceSpace(gameArea[yIndex][xIndex], emptySpace);}
 					break;
 				default:
 					break;
@@ -197,7 +215,7 @@ function jackIn() {
 			gameArea[getRandomInt(0, yBorder)][1].sprite = ">";
 			moveNPCs();
 			render();}
-		}, 1000);
+		}, 100);
 	}
 }
 
