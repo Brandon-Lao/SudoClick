@@ -37,7 +37,8 @@ p.console{
 	font-family: "Lucida Sans Typewriter";
 	color: white;
 }
-
+/*Console CSS nicked from Universal Paperclips. It was too good.
+Should probably make it a bit unique, though.*/
 .pulsate {
     -webkit-animation: pulsate .5s ease-out;
     -webkit-animation-iteration-count: infinite; 
@@ -52,6 +53,6 @@ p.console{
         opacity: 1.0;
     }
     100% { 
-        opacity: 0.0;
+        opacity: 1.0;
     }
 }

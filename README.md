@@ -1,4 +1,4 @@
-# Code Clicker: An Undertaking of HTML5, Javascript, and CSS
+<!-- # Code Clicker: An Undertaking of HTML5, Javascript, and CSS
 
 React.js. Express, using Sequelize. Redux, React-Redux.
 
@@ -22,4 +22,6 @@ to do with CSS.
 
 
 The purpose of this project is use those three languages, and ONLY those three languages, to construct an incremental game
-similar to ones already on the web, such as Universal Paperclips, a dark room, Candy Box(2), and Cookie Clicker.
+similar to ones already on the web, such as Universal Paperclips, a dark room, Candy Box(2), and Cookie Clicker. -->
+
+I'll uh, work on the README. Later. Est.

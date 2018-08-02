@@ -13,7 +13,7 @@ var currentHeight = 300;
 
 function initializeChart() {
 	ctx.clearRect(0, 0, canvasWidth, canvasHeight);
-	ctx.strokeStyle = "white";
+	ctx.strokeStyle = "#FFFFFF";
 	ctx.strokeRect(0, 0, canvasWidth, canvasHeight);
 	for (i = 100; i < canvasWidth; i += 100) {
 		ctx.beginPath();
@@ -21,13 +21,19 @@ function initializeChart() {
 		ctx.lineTo(i, canvasHeight);
 		ctx.stroke();
 	}
+	console.log("Finished initializing");
 }
 
 function drawLine(nextHeight) {
-	ctx.strokeStyle = "green";
+	ctx.strokeStyle = "#33FF00";
 	ctx.beginPath();
 	ctx.moveTo(currentWidth, currentHeight);
-	//If currentWidth + 100 > graph, reset graph, draw new one
+	if (currentWidth + 100 > 600) {
+		initializeChart();
+		currentWidth = 0;
+		//Change X-axis dates here.
+		console.log("Resetting width.");
+	}
 	ctx.lineTo(currentWidth + 100, nextHeight);
 	currentWidth += 100;
 	currentHeight = nextHeight;

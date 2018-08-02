@@ -1,14 +1,13 @@
 var code = 0;
 var programs = 0;
 var cash = 0;
+var programmers = 0;
+var codeCost = 20;
 
 function codeClick(number) {
     code = code + number;
     document.getElementById("code").innerHTML = Math.floor(code);
 }
-
-var programmers = 0;
-var codeCost = 20;
 
 function compileCode() {
     if (code >= codeCost) {
