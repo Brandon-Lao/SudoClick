@@ -22,7 +22,7 @@ function compileCode() {
         programs += 1;
         code -= codeCost;
         document.getElementById("programs").innerHTML = programs;
-        document.getElementById("code").innerHTML = code;
+        document.getElementById("code").innerHTML = Math.floor(code);
     }
 }
 

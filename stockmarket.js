@@ -45,25 +45,25 @@ function initializeChart() {
 	ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 	ctx.strokeStyle = "#FFFFFF";
 	ctx.strokeRect(0, 0, canvasWidth, canvasHeight);
-	for (i = 100; i < canvasWidth; i += 100) {
+	for (i = 100; i <= canvasWidth; i += 100) {
 		ctx.beginPath();
 		ctx.moveTo(i, 0);
 		ctx.lineTo(i, canvasHeight);
 		ctx.stroke();
 	}
-	console.log("Finished initializing");
 }
 
 function drawLine(nextHeight) {
 	ctx.strokeStyle = "#33FF00";
 	ctx.beginPath();
-	ctx.moveTo(currentWidth, currentHeight);
 	if (currentWidth + 100 > 600) {
 		initializeChart();
+		ctx.strokeStyle = "#33FF00"; //Have to reset style.
 		currentWidth = 0;
-		//Change X-axis dates here.
-		console.log("Resetting width.");
+		currentHeight = getHeightToDrawAt(getPercentToDraw(stockLines[5], marketCap));
+		stockLines.fill(0);
 	}
+	ctx.moveTo(currentWidth, currentHeight);
 	ctx.lineTo(currentWidth + 100, nextHeight);
 	currentWidth += 100;
 	currentHeight = nextHeight;
@@ -87,8 +87,6 @@ function stockMarketTick() {
 		stockLines.forEach(oldLine => {
 			//For each old line
 			if (oldLine > 0) {
-				//All of them should be greater than 0.
-				console.log("Drawing at point ", currentWidth / 100 - 1, "at height ", getHeightToDrawAt(getPercentToDraw(oldLine, marketCap)))
 				drawLine(
 					getHeightToDrawAt(getPercentToDraw(oldLine, marketCap))
 				);
@@ -96,9 +94,14 @@ function stockMarketTick() {
 		});
 		//We wanna draw the new line anyways, but only after we resize.
 	}
-	percentageToDraw = getPercentToDraw(cash, marketCap) //Re-run percentage to draw, however.
+	percentageToDraw = getPercentToDraw(cash, marketCap); //Re-run percentage to draw, however.
 	var heightToDrawAt = getHeightToDrawAt(percentageToDraw);
-				console.log("Drawing at point ", currentWidth / 100 - 1, "at height ", heightToDrawAt);
+	console.log(
+		"Drawing at point ",
+		currentWidth / 100 - 1,
+		"at height ",
+		heightToDrawAt
+	);
 	drawLine(heightToDrawAt); //DrawLine increments out currentWidth, so that'll be fine.
 	stockLines[currentWidth / 100 - 1] = Math.max(cash, 1); //Store our cash value in the corresponding stockLine. Min 1, since we check for 0 in our overflow.
 	oldCash = cash;
@@ -109,7 +112,8 @@ function stockMarketTick() {
 //Base share price and such.
 
 initializeChart();
-// window.setInterval(function() {
-
-// }, 180000);
+cash = 200;
+window.setInterval(function() {
+	stockMarketTick();
+}, 2000);
 //180000 = 3 minutes
