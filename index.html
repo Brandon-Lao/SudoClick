@@ -2,7 +2,8 @@
 <html>
   <head>
     <link href="style.css" rel="stylesheet" type="text/css">
-    <title>npm i click</title>
+    <link rel="shortcut icon" href="https://i.imgur.com/bRsqQaG.png" />
+    <title>Sudo Click</title>
   </head>
   <body>
     <p class="console">
@@ -26,8 +27,8 @@
         <button onclick="saveGame()">Save_GAME</button> <button onclick="loadGame()">Load_GAME</button>
       </div>
     </div>
-
-    <div id="centerscreen">
+    <!-- Ideally we'd want all of these to be hidden, and only inserted once the user matches a condition. -->
+    <span id="centerscreen">
       <div id="upgrades">
       </div>
       <div>
@@ -46,7 +47,7 @@
           "fireShot()">Fire_SHOT</button> <button onclick="jackIn()">Initiate_RUN</button><button onclick="jackOut()">Stop_RUN</button>
         </div>
       </div>
-    </div>
+    </span>
   </div>
     <script src="main.js" type="text/javascript"></script>
     <script src="sidescroller.js" type="text/javascript"></script>
