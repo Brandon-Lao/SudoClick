@@ -111,7 +111,7 @@ function insertUpgrade(upgrade) {
 	var title = document.createTextNode(upgrade.name);
 	span.appendChild(title);
 
-	var cost = document.createTextNode(upgrade.costString);
+	var cost = document.createTextNode(" | " + upgrade.costString);
 	element.appendChild(cost);
 
 	var div = document.createElement("div");

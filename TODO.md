@@ -4,7 +4,7 @@ Have an MPV that's hard, but eventually reachable? Nope. MPV takes 15 minutes to
 
 # THINGS TO DO:
 
-+ Implement upgrades on the currently existing buildings.
++ Depricate hideUpgrades() and just use the upgrades.js to add in new buttons or somesuch.
 + Add in a different resource independent of the current loop.
 + Ability to add in different modules to do different things.
 
