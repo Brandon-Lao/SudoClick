@@ -15,7 +15,6 @@ Have an MPV that's hard, but eventually reachable? Nope. MPV takes 15 minutes to
 + Make the console take up the entirety of the top, and allow it to have a log of stuff instead of just one.
 
 # STOCK MARKET THINGS TO DO:
-+ Graph should dynamically update it's max/min and shift it's numbers about, as well as the lines based on it.
 + After that, we should be able to buy/sell our own treasury stock, which affects market value.
 + Finally, we should be able to influence the stock market by spending resources (code, programs) on it.
 

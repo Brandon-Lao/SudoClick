@@ -96,12 +96,6 @@ function stockMarketTick() {
 	}
 	percentageToDraw = getPercentToDraw(cash, marketCap); //Re-run percentage to draw, however.
 	var heightToDrawAt = getHeightToDrawAt(percentageToDraw);
-	console.log(
-		"Drawing at point ",
-		currentWidth / 100 - 1,
-		"at height ",
-		heightToDrawAt
-	);
 	drawLine(heightToDrawAt); //DrawLine increments out currentWidth, so that'll be fine.
 	stockLines[currentWidth / 100 - 1] = Math.max(cash, 1); //Store our cash value in the corresponding stockLine. Min 1, since we check for 0 in our overflow.
 	oldCash = cash;

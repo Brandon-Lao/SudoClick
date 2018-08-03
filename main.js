@@ -2,9 +2,13 @@ var code = 0;
 var programs = 0;
 var cash = 0;
 var programmers = 0;
+var programmerModifier = 0;
+var programmerMultiplier = 1;
+var programmerProductivity = 1;
 var codeCost = 20;
 
-function refreshValues() { //Will have to work on replacing all those back down with just this. May be a bit inefficent. though.
+function refreshValues() {
+    //Will have to work on replacing all those back down with just this. May be a bit inefficent. though.
     document.getElementById("code").innerHTML = Math.floor(code);
     document.getElementById("programs").innerHTML = Math.floor(programs);
     document.getElementById("cash").innerHTML = Math.floor(cash);
@@ -41,14 +45,15 @@ function buyProgrammer() {
 function sellProgram() {
     if (programs > 0) {
         programs -= 1;
-        cash += 10+Math.floor(getRandomInt(0,42));
+        cash += 10 + Math.floor(getRandomInt(0, 42));
         document.getElementById("programs").innerHTML = programs;
         document.getElementById("cash").innerHTML = cash;
     }
 }
 
 function hideUpgrades() {
-    if (code < 20 && document.getElementById("compilecode").hidden) { //Should change this so instead of it being hidden, it inserts it instead.
+    if (code < 20 && document.getElementById("compilecode").hidden) {
+        //Should change this so instead of it being hidden, it inserts it instead.
         document.getElementById("compilecode").hidden = true;
     } else {
         document.getElementById("compilecode").hidden = false;
@@ -62,16 +67,18 @@ hideUpgrades();
 window.setInterval(function() {
     hideUpgrades();
     if (character.health === 0) jackOut(); //More immediate than the 100ms delay in sidescroller.
-    codeClick(programmers / 1000);
-}, 1);
+    programmerProductivity = programmers * (programmerModifier + 1) * programmerMultiplier;
+    codeClick(programmerProductivity / 1000);
+    checkUpgrades();
+}, 1); //Constantly ticking at one millisecond may not be the best idea. Either lower the interval or set the researchArray forEach interval to a slower interval.
 
 function saveGame() {
     var save = {
-    code: code,
-    programs: programs,
-    cash: cash,
-    programmers: programmers
-};
+        code: code,
+        programs: programs,
+        cash: cash,
+        programmers: programmers
+    };
     localStorage.setItem("save", JSON.stringify(save));
 }
 
@@ -80,7 +87,8 @@ function loadGame() {
     if (typeof savegame.code !== "undefined") code = savegame.code;
     if (typeof savegame.programs !== "undefined") programs = savegame.programs;
     if (typeof savegame.cash !== "undefined") cash = savegame.cash;
-    if (typeof savegame.programmers !== "undefined") programmers = savegame.programmers;
+    if (typeof savegame.programmers !== "undefined")
+        programmers = savegame.programmers;
     refreshValues();
     hideUpgrades();
 }
