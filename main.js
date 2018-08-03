@@ -4,6 +4,14 @@ var cash = 0;
 var programmers = 0;
 var codeCost = 20;
 
+function refreshValues() { //Will have to work on replacing all those back down with just this. May be a bit inefficent. though.
+    document.getElementById("code").innerHTML = Math.floor(code);
+    document.getElementById("programs").innerHTML = Math.floor(programs);
+    document.getElementById("cash").innerHTML = Math.floor(cash);
+    document.getElementById("programmers").innerHTML = Math.floor(programmers);
+    document.getElementById("codeCost").innerHTML = Math.floor(codeCost);
+}
+
 function codeClick(number) {
     code = code + number;
     document.getElementById("code").innerHTML = Math.floor(code);
@@ -73,4 +81,6 @@ function loadGame() {
     if (typeof savegame.programs !== "undefined") programs = savegame.programs;
     if (typeof savegame.cash !== "undefined") cash = savegame.cash;
     if (typeof savegame.programmers !== "undefined") programmers = savegame.programmers;
+    refreshValues();
+    hideUpgrades();
 }
