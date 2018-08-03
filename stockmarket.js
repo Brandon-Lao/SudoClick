@@ -106,7 +106,6 @@ function stockMarketTick() {
 //Base share price and such.
 
 initializeChart();
-cash = 200;
 window.setInterval(function() {
 	stockMarketTick();
 }, 2000);

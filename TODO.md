@@ -7,6 +7,7 @@ Have an MPV that's hard, but eventually reachable? Nope. MPV takes 15 minutes to
 + Depricate hideUpgrades() and just use the upgrades.js to add in new buttons or somesuch.
 + Add in a different resource independent of the current loop.
 + Ability to add in different modules to do different things.
++ Consolidate in variable elements, i.e anything that needs to be saved.
 
 + Set things into different script files, and just generally tidy up that code.
 
@@ -39,35 +40,4 @@ Have an MPV that's hard, but eventually reachable? Nope. MPV takes 15 minutes to
 A. HTML/Javascript accepts everything. .innterHTML? That's fine. Array overflowing? That's fine.
 B. Write out EVERY case. There's a lot to be considered.
 C. Scalability: what's trash code today can cost you a lot later on, especially when you needa add new features. (not really something new, but wow did it get reinforced)
-D. Gods I hate this stock market graph.
-
-#QUARENTINED CODE:
-	//You know what, ignore this tick for now. I wanna keep it for the comments, but I'm not using it.
-function bleh() {
-	const difference = cash - oldCash; //Our profits/losses.
-	var marketCap = oldCash * 2; //The top of the chart.
-	if (oldCash === 0) marketCap = cash * 2 //Failsafe in case we end a quarter with no money.
-	console.log(marketCap)
-	//Cash = oldCash means we draw at 50%. Higher and we draw as a percentage from 50-100%, less and it's 50-0%.
-	//Thus cash/marketCap = % value that we want to draw at.
-	//But we draw in the opposite direction (higher numbers mean lower on the graph...)
-	const newCap = cash / marketCap;
-	console.log(newCap);
-	if (newCap > 1) {
-		/*Overflow! We'll need to resize the graph, make a new market cap, rescale the older lines to fit in with the new scale!
-		Oh the humanity!
-		Since I'm probably not getting this done for today: future me.
-		You'll probably want to store the width-heights for all nodes on the graph as variables.
-		Thing is, say we rise from 0-50 with a cap of 100, that's a 50% raise.
-		Then we overflow from 50-150.
-		Well now our previous draw has gone from a 50% raise to a 33% raise.
-		So the nextHeights will have to be modified by...
-		Oh good lord, what -would- they be modified by. You should probably put in a help ticket.
-		If worse comes to worst, you can just keep the old values, unmodified, but if you go from 0-100, then 0-200 then it'd just be a straight line at the cap.
-
-		You know what the worst thing is? You can't ignore this problem. Growth in incremental games is always explosive in some way.
-		*/
-	}
-	
-	oldCash = cash;
-}
+D. Gods I hate this stock market graph. (Everything can be solved by saving more variables!)

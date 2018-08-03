@@ -1,5 +1,6 @@
 var xBorder = 51;
 var yBorder = 10;
+var setHealthTo = 3;
 var gameArea;
 
 function getRandomInt(min, max) {
@@ -244,7 +245,7 @@ var runStatus = false;
 function jackIn() {
 	if (!runStatus) {
 		runStatus = true;
-		setHealth(3);
+		setHealth(setHealthTo);
 		runState = window.setInterval(function() {
 			gameArea[getRandomInt(0, yBorder)][xBorder - 1].sprite = "O";
 			moveNPCs();
