@@ -12,6 +12,34 @@ const canvasHeight = 300;
 var currentWidth = 0;
 var currentHeight = 300;
 var oldCash = 0;
+var marketCap = 0;
+
+function getPercentToDraw(cash, cap) {
+	return cash / cap;
+}
+
+function getHeightToDrawAt(percent) {
+	let heightToDraw;
+	heightToDraw = Math.max(Math.floor(canvasHeight * percent), 0); //Ensure the height we're drawing at is > 0
+	//Thing is, this is assuming 100% is 300, when it's the other way around, so...
+	heightToDraw = heightToDraw - canvasHeight;
+	if (heightToDraw < 0) heightToDraw *= -1; //This should always fire.
+	return heightToDraw;
+}
+
+/*Alright, so we can store the previous stock lines as an array.
+Each object in the array needs to hold the old percentage value, and the marketCap value?
+WAIT NO, ALL THEY'D NEED TO HOLD IS THE CASH VALUE THEY ASSOCIATE TO
+Cause, like:
+Say cash 50, market value is 100.
+Then it'd be 50%.
+But if we then raise the cap to 200, then it's be 25%.
+So all we need to do is take the old cash value the line corresponded to, and calculate the percentage value of it
+  in relation to the new market cap value.
+The properties would hold their position, so... Yeah, an array would be better, probably.
+When we reset, clear all lines except 5, then set five to the first line, then add the new one as line two.*/
+var stockLines = new Array(6);
+stockLines.fill(0);
 
 function initializeChart() {
 	ctx.clearRect(0, 0, canvasWidth, canvasHeight);
@@ -40,52 +68,39 @@ function drawLine(nextHeight) {
 	currentWidth += 100;
 	currentHeight = nextHeight;
 	ctx.stroke();
-
 }
 
 function stockMarketTick() {
-	const difference = cash - oldCash; //Our profits/losses.
-	var marketCap = oldCash * 2; //The top of the chart.
-	if (oldCash === 0) marketCap = cash * 2 //Failsafe in case we end a quarter with no money.
-	console.log(marketCap)
-	//Cash = oldCash means we draw at 50%. Higher and we draw as a percentage from 50-100%, less and it's 50-0%.
-	//Thus cash/marketCap = % value that we want to draw at.
-	//But we draw in the opposite direction (higher numbers mean lower on the graph...)
-	const newCap = cash / marketCap;
-	console.log(newCap);
-	if (newCap > 1) {
-		/*Overflow! We'll need to resize the graph, make a new market cap, rescale the older lines to fit in with the new scale!
-		Oh the humanity!
-		Since I'm probably not getting this done for today: future me.
-		You'll probably want to store the width-heights for all nodes on the graph as variables.
-		Thing is, say we rise from 0-50 with a cap of 100, that's a 50% raise.
-		Then we overflow from 50-150.
-		Well now our previous draw has gone from a 50% raise to a 33% raise.
-		So the nextHeights will have to be modified by...
-		Oh good lord, what -would- they be modified by. You should probably put in a help ticket.
-		If worse comes to worst, you can just keep the old values, unmodified, but if you go from 0-100, then 0-200 then it'd just be a straight line at the cap.
+	if (marketCap === 0) {
+		marketCap = cash * 2;
+		oldCash = cash;
+	} //We only want to set marketCap this way if it's undefined.
+	//Should probably be an initializer function or something.
 
-		You know what the worst thing is? You can't ignore this problem. Growth in incremental games is always explosive in some way.
-		*/
+	var percentageToDraw = getPercentToDraw(cash, marketCap); //Should give us how percentagely high we want our graph to be
+	if (percentageToDraw > 1) {
+		//Overflow, we need to resize the graph
+		initializeChart(); //First, clear the graph.
+		marketCap = cash * 2; //Raise the market cap to something that should be impossible to reach past 100%
+		currentWidth = 0;
+		currentHeight = 300; //Should be set to previousChartHeight later.
+		stockLines.forEach(oldLine => {
+			//For each old line
+			if (oldLine > 0) {
+				//All of them should be greater than 0.
+				console.log("Drawing at point ", currentWidth / 100 - 1, "at height ", getHeightToDrawAt(getPercentToDraw(oldLine, marketCap)))
+				drawLine(
+					getHeightToDrawAt(getPercentToDraw(oldLine, marketCap))
+				);
+			}
+		});
+		//We wanna draw the new line anyways, but only after we resize.
 	}
-	if (newCap > 0.5) {
-		const upperPercentage = newCap - 0.5 * 2;
-		console.log(upperPercentage)
-		const nextY = Math.floor(150-(150*upperPercentage));
-		console.log(nextY);
-		drawLine(nextY);
-	}
-	if (newCap === 0.5) {
-		console.log("Same height.")
-		drawLine(currentHeight);
-	}
-	else {
-		const lowerPercentage = newCap - 0.5 * 2;
-		console.log(lowerPercentage);
-		const nextY = Math.floor(150+(150*lowerPercentage));
-		console.log(nextY);
-		drawLine(nextY);
-	}
+	percentageToDraw = getPercentToDraw(cash, marketCap) //Re-run percentage to draw, however.
+	var heightToDrawAt = getHeightToDrawAt(percentageToDraw);
+				console.log("Drawing at point ", currentWidth / 100 - 1, "at height ", heightToDrawAt);
+	drawLine(heightToDrawAt); //DrawLine increments out currentWidth, so that'll be fine.
+	stockLines[currentWidth / 100 - 1] = Math.max(cash, 1); //Store our cash value in the corresponding stockLine. Min 1, since we check for 0 in our overflow.
 	oldCash = cash;
 }
 
@@ -93,8 +108,8 @@ function stockMarketTick() {
 //Should make an IPO upgrade to initialize the stock market component, which determines
 //Base share price and such.
 
-initializeChart()
+initializeChart();
 // window.setInterval(function() {
-   
+
 // }, 180000);
 //180000 = 3 minutes
