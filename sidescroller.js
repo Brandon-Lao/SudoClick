@@ -41,8 +41,9 @@ const hackShot2 = {
 	empty: false
 };
 
-function takeDamage(damage) {
-	character.health = Math.max(character.health - damage, 0);
+function setHealth(healthMod) {
+	character.health = Math.max(character.health + healthMod, 0);
+	document.getElementById("characterhealth").innerHTML = character.health;
 }
 
 function fireShot() {
@@ -72,7 +73,7 @@ function detectCollisions(incomingY, incomingX, incomingSprite) {
 				switch (gameArea[incomingY][incomingX].sprite) {
 					case "O":
 						console.log("Oof ouch owie!");
-						takeDamage(1);
+						setHealth(-1);
 						return true;
 					case "$":
 						console.log("Got money");
@@ -86,7 +87,7 @@ function detectCollisions(incomingY, incomingX, incomingSprite) {
 				switch (gameArea[incomingY][incomingX].sprite) {
 					case "@":
 						console.log("Oof ouch owie!");
-						takeDamage(1);
+						setHealth(-1);
 						return false;
 					case ">":
 						replaceSpace(
@@ -123,27 +124,45 @@ function detectCollisions(incomingY, incomingX, incomingSprite) {
 }
 
 function charDown() {
-	if (
-		character.charY + 1 < yBorder &&
-		detectCollisions(character.charY + 1, character.charX, character.sprite)
-	) {
-		replaceSpace(gameArea[character.charY][character.charX], emptySpace);
-		character.charY += 1;
+	if (runStatus) { //Should find a cleaner way of checking run status before functions are accessable.
+		if (
+			character.charY + 1 < yBorder &&
+			detectCollisions(
+				character.charY + 1,
+				character.charX,
+				character.sprite
+			)
+		) {
+			replaceSpace(
+				gameArea[character.charY][character.charX],
+				emptySpace
+			);
+			character.charY += 1;
+		}
+		replaceSpace(gameArea[character.charY][character.charX], character);
+		render();
 	}
-	replaceSpace(gameArea[character.charY][character.charX], character);
-	render();
 }
 
 function charUp() {
-	if (
-		character.charY - 1 >= 0 &&
-		detectCollisions(character.charY - 1, character.charX, character.sprite)
-	) {
-		replaceSpace(gameArea[character.charY][character.charX], emptySpace);
-		character.charY -= 1;
+	if (runStatus) {
+		if (
+			character.charY - 1 >= 0 &&
+			detectCollisions(
+				character.charY - 1,
+				character.charX,
+				character.sprite
+			)
+		) {
+			replaceSpace(
+				gameArea[character.charY][character.charX],
+				emptySpace
+			);
+			character.charY -= 1;
+		}
+		replaceSpace(gameArea[character.charY][character.charX], character);
+		render();
 	}
-	replaceSpace(gameArea[character.charY][character.charX], character);
-	render();
 }
 
 function initialRender() {
@@ -225,11 +244,11 @@ var runStatus = false;
 function jackIn() {
 	if (!runStatus) {
 		runStatus = true;
-		character.health += 3;
+		setHealth(3);
 		runState = window.setInterval(function() {
-				gameArea[getRandomInt(0, yBorder)][xBorder - 1].sprite = "O";
-				moveNPCs();
-				render();
+			gameArea[getRandomInt(0, yBorder)][xBorder - 1].sprite = "O";
+			moveNPCs();
+			render();
 		}, 100);
 	}
 }
