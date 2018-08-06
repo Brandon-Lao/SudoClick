@@ -44,7 +44,7 @@ const upgrade1 = {
 	description:
 		"Boost up co-worker productivity with the only non-illegal stimulant on the non-black market. Programmers can code two extra lines of code per second.",
 	revealCond: function() {
-		return programmers >= 5;
+		return programmers >= 1;
 	},
 	buyableCond: function() {
 		return cash >= 500;

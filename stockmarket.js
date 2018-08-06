@@ -45,10 +45,16 @@ When we reset, clear all lines except 5, then set five to the first line, then a
 var stockLines = new Array(6);
 stockLines.fill(0);
 var stockValues = new Array(6);
-stockValues.fill({
-	color: "",
-	price: 0,
-});
+//Why when you fill an array with an object, all elements of the array point to the same object?
+function resetValues() {
+	for (i=0; i<6; i++) {
+		stockValues[i] = new Object();
+		stockValues[i].color = "";
+		stockValues[i].price = 0;
+	}
+}
+//Why is it when you fill an array with an object, you get an array with pointers all to the same object?
+resetValues();
 
 function initializeChart() {
 	ctx.clearRect(0, 0, canvasWidth, canvasHeight);
@@ -72,7 +78,9 @@ function drawLine(nextHeight) {
 		currentHeight = getHeightToDrawAt(
 			getPercentToDraw(stockLines[5], marketCap)
 		);
-		stockLines.fill(0);stockValues.fill({ color: "", price: 0});
+		stockLines.fill(0);
+		resetValues();
+
 	}
 	ctx.moveTo(currentWidth, currentHeight);
 	ctx.lineTo(currentWidth + 100, nextHeight);
@@ -131,8 +139,8 @@ function stockMarketTick() {
 		currentWidth - 100,
 		20
 	);
-	stockValues[currentWidth / 100 - 1].color = ctx.fillStyle;
-	stockValues[currentWidth / 100 - 1].price = stockPrice;
+	stockValues[Math.max(Math.round(currentWidth / 100 - 1), 0)].color = ctx.fillStyle;
+	stockValues[Math.max(Math.round(currentWidth / 100 - 1), 0)].price = stockPrice;
 	stockLines[currentWidth / 100 - 1] = Math.max(stockPrice, 1); //Store our cash value in the corresponding stockLine. Min 1, since we check for 0 in our overflow.
 	oldStock = stockPrice;
 }

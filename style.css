@@ -11,7 +11,8 @@ body{
 
 #leftside {
 	float: left;
-	width: 25%;
+	width: 20%;
+	margin-right: 5%;
 }
 
 #centerscreen {
@@ -48,6 +49,10 @@ body{
 
 #sidescrollergraphics {
 	font-family: "Courier New";
+}
+
+#sidescrollerbar {
+		margin-bottom: 50px;
 }
 
 p.console{

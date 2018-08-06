@@ -73,7 +73,6 @@ function detectCollisions(incomingY, incomingX, incomingSprite) {
 			case "@":
 				switch (gameArea[incomingY][incomingX].sprite) {
 					case "O":
-						console.log("Oof ouch owie!");
 						setHealth(-1);
 						return true;
 					case "$":
@@ -87,7 +86,6 @@ function detectCollisions(incomingY, incomingX, incomingSprite) {
 			case "O":
 				switch (gameArea[incomingY][incomingX].sprite) {
 					case "@":
-						console.log("Oof ouch owie!");
 						setHealth(-1);
 						return false;
 					case ">":
@@ -236,9 +234,6 @@ function moveNPCs() {
 		});
 	});
 }
-
-initialRender();
-
 var runState;
 var runStatus = false;
 
