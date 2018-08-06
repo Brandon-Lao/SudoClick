@@ -36,6 +36,11 @@ body{
 	border: 1px solid white;
 }
 
+#characterhealth{
+	color: red;
+	margin-right: 5px;
+}
+
 #sidescroller {
 	background-color: black;
 	box-sizing: content-box;

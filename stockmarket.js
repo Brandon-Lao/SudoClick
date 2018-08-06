@@ -187,6 +187,14 @@ function IPOStart() {
 	buttonDiv.appendChild(raiseStockButton);
 	canvasDiv.appendChild(buttonDiv);
 
+	var stockDiv = document.createElement("div");
+	var stockNumber = document.createElement("span");
+	stockNumber.id = "stocknumber";
+	stockNumber.appendChild(document.createTextNode("50000"));
+	stockDiv.appendChild(document.createTextNode("Stocks Owned: "));
+	stockDiv.appendChild(stockNumber);
+	buttonDiv.appendChild(stockDiv);
+
 	window.setInterval(function() {
 		stockMarketTick();
 	}, 2000);
@@ -206,6 +214,7 @@ function buyStock() {
 		cash -= stockPrice * 1000;
 		stocksOwned += 1000;
 		document.getElementById("cash").innerHTML = Math.floor(cash);
+		document.getElementById("stocknumber").innerHTML = stocksOwned;
 	}
 }
 
@@ -214,6 +223,7 @@ function sellStock() {
 		stocksOwned -= 1000;
 		cash += 1000 * stockPrice;
 		document.getElementById("cash").innerHTML = Math.floor(cash);
+		document.getElementById("stocknumber").innerHTML = stocksOwned;
 	}
 }
 
