@@ -30,7 +30,7 @@ body{
 #canvas{
 	background-color: black;
 	box-sizing: content-box;;
-	width: 600px;
+	width: 500px;
 	height: 300px;
 	border: 1px solid white;
 }

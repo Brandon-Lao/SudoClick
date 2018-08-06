@@ -6,6 +6,7 @@ var programmerModifier = 0;
 var programmerMultiplier = 1;
 var programmerProductivity = 1;
 var codeCost = 20;
+var costOfProgrammers = 0;
 
 function refreshValues() {
     //Will have to work on replacing all those back down with just this. May be a bit inefficent. though.
@@ -35,6 +36,8 @@ function buyProgrammer() {
     if (cash >= programmerCost) {
         programmers = programmers + 1;
         cash = cash - programmerCost;
+        costOfProgrammers += programmerCost;
+
         document.getElementById("programmers").innerHTML = programmers;
         document.getElementById("cash").innerHTML = cash;
     }
