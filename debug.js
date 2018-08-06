@@ -6,21 +6,15 @@ function getMoney() {
 function startIPO() {
 	IPOStart();
 	programs = 100000;
-	document.getElementById("programmers").innerHTML = programmers;
+	document.getElementById("programs").innerHTML = programs;
 }
 
 function startShooter() {
-	document.onkeypress = function(input) {
-		console.log("Noting keypresses");
-		console.log(input);
-		switch (input.which) {
-			case 38:
-			charUp(); break;
-			case 39:
-			fireShot(); break;
-			case 40:
-			charDown(); break;
-			default: return;
-		}
-	}
+	var div1 = document.getElementById("sidescroller");
+	div1.hidden = false;
+	var div2 = document.getElementById("sidescrollergraphics");
+	div2.hidden = false;
+	var div3 = document.getElementById("sidescrollerbar");
+	div3.hidden = false;
+	initialRender();
 }

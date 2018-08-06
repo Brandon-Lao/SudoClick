@@ -101,6 +101,7 @@ document.onkeydown = checkKey;
 
 function checkKey(event) {
 	event = event || window.event;
+	if (event !== undefined) {
 	switch (event.keyCode) {
 		case 38:
 			charUp();
@@ -113,18 +114,7 @@ function checkKey(event) {
 			break;
 		default:
 			return;
-	}
+	}}
 }
 
 checkKey();
-
-function startShooter() {
-	console.log("starting shooter");
-	let div1 = document.getElementById("sidescroller");
-	div1.hidden = false;
-	let div2 = document.getElementById("sidescrollergraphics");
-	div2.hidden = false;
-	let div3 = document.getElementById("sidescrollerbar");
-	div3.hidden = false;
-	initialRender();
-}

@@ -72,7 +72,7 @@ const upgrade2 = {
 	id: "coffee2", //For setting the id of the button element.
 	description: "I knew we forgot something. Doubles worker productivity.",
 	revealCond: function() {
-		return upgrade1.revealFlag === 2;
+		return upgrade1.revealFlag === 2 && programmers >= 2;
 	},
 	buyableCond: function() {
 		return cash >= 200;

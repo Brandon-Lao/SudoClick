@@ -28,7 +28,7 @@
         <button onclick="saveGame()">Save_GAME</button> <button onclick="loadGame()">Load_GAME</button>
       </div>
       <div id="debugbuttons">
-        <button onclick="getMoney()">DEBUG_MONEY</button> <button onclick="startIPO()">DEBUG_STOCK</button>
+        <button onclick="getMoney()">DEBUG_MONEY</button> <button onclick="startIPO()">DEBUG_STOCK</button> <button onclick="startShooter()">DEBUG_HACK</button>
       </div>
     </div>
     <div id="upgrades">
@@ -38,13 +38,13 @@
     <div id="labelarea">
     </div>
     <span id="centerscreen">
-      <div>
-        <div id="sidescroller">
-          <div id="sidescrollergraphics">
+            <div>
+        <div id="sidescroller" hidden>
+          <div id="sidescrollergraphics" hidden>
           </div>
         </div>
 
-        <div id="sidescrollerbar">
+        <div id="sidescrollerbar" hidden>
           HEALTH: <span id="characterhealth">0</span><button onclick="charUp()">Move_UP</button><button onclick="charDown()">Move_DOWN</button> <button onclick=
           "fireShot()">Fire_SHOT</button> <button onclick="jackIn()">Initiate_RUN</button><button onclick="jackOut()">Stop_RUN</button>
         </div>
